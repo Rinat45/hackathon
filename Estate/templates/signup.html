@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="row">
+    <form method="POST" action="/signup">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="name" placeholder="ФИО" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Пароль">
+                </div>
+            </div>
+			<div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="org" placeholder="Организация">
+                </div>
+            </div>
+			<div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="tel" placeholder="Телефон">
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-large is-fullwidth">Регистрировать</button>
+        </form>
+</div>
+
+{% endblock %}

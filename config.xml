@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<Estate>
+  <web_server>
+    <host>localhost</host>
+    <port>4556</port>
+    <cert>cert1.pem</cert>
+    <key>key1.pem</key>
+  </web_server>
+  <postgresql>
+    <database>Estate</database>
+    <user>postgres</user>
+    <password>1qaz2wsx</password>
+    <host>localhost</host>
+    <port>5432</port>
+  </postgresql>
+</Estate>

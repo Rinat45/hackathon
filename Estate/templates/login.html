@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="row">
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	    <div class="notification is-danger">
+		{{ messages[0] }}
+	    </div>
+	{% endif %}
+	{% endwith %}
+    <form method="POST" action="/login">
+            <div class="field">
+                <div class="control">
+                    <input type="email" name="email" placeholder="Ваш электронный адрес" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Введите пароль">
+                </div>
+            </div>
+            <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox">
+                    Запомнить
+                </label>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">Вход</button>
+        </form>
+		<a href="{{ url_for('signup') }}" class="navbar-brand">Регистрация</a>
+</div>
+
+{% endblock %}
