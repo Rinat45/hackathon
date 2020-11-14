@@ -1,0 +1,16 @@
+template_to_file
+exceptions
+Template
+tempfile
+re
+os
+CommandError
+get_current_bytecode_suffixes
+has_pep3147
+load_module_pyc
+load_python_file
+pyc_file_from_path
+coerce_resource_to_filename
+load_module_py
+edit
+py35

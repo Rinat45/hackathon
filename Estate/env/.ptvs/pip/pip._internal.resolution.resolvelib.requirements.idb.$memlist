@@ -1,0 +1,11 @@
+Requirement
+canonicalize_name
+RequiresPythonRequirement
+format_name
+InstallRequirement
+MYPY_CHECK_RUNNING
+ExplicitRequirement
+Candidate
+CandidateLookup
+SpecifierSet
+SpecifierRequirement

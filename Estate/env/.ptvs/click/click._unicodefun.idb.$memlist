@@ -1,0 +1,7 @@
+PY2
+_check_for_unicode_literals
+_verify_python3_env
+codecs
+os
+_find_unicode_literals_frame
+sys

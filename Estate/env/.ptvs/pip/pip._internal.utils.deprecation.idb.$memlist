@@ -1,0 +1,14 @@
+deprecated
+Any
+_original_showwarning
+absolute_import
+logging
+Optional
+warnings
+install_warning_logger
+MYPY_CHECK_RUNNING
+PipDeprecationWarning
+DEPRECATION_MSG_PREFIX
+parse
+_showwarning
+current_version

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="row">
+    <h1 class="title">
+  Добро пожаловать, {{ name }}!
+</h1>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	    <div class="notification is-info">
+		{{ messages[0] }} 
+	    </div>
+	{% endif %}
+	{% endwith %}
+ <ul class="menu-list">	
+    <li><a href="/">Просмотреть публикации о свободном имуществе</a></li>
+    <li><a href="/">Опубликовать информацию о свободном имуществе</a></li>
+    <li><a href="{{ url_for('logout') }}">Выход из личного кабинета</a></li>    
+  </ul>
+</div>
+
+{% endblock %}
+сервиса для формирования и использования органами государственной власти Оренбургской области базы данных по свободному (неиспользуемому) имуществу

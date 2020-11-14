@@ -1,0 +1,9 @@
+six
+unicodedata
+sys
+re
+CODING_RE
+try_encode
+detect_encoding
+decompose
+filesys_decode

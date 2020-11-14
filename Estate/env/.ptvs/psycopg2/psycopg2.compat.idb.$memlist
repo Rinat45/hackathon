@@ -1,0 +1,7 @@
+PY2
+text_type
+PY3
+lru_cache
+__all__
+string_types
+sys

@@ -1,0 +1,8 @@
+List
+os
+absolute_import
+site_config_dirs
+MYPY_CHECK_RUNNING
+_appdirs
+user_cache_dir
+user_config_dir

@@ -1,0 +1,12 @@
+_SETUPTOOLS_SHIM
+List
+make_setuptools_egg_info_args
+make_setuptools_shim_args
+make_setuptools_bdist_wheel_args
+Sequence
+Optional
+MYPY_CHECK_RUNNING
+make_setuptools_install_args
+make_setuptools_develop_args
+make_setuptools_clean_args
+sys

@@ -1,0 +1,16 @@
+sys
+UpdatingDefaultsHelpFormatter
+create_main_parser
+parse_command
+MYPY_CHECK_RUNNING
+os
+CommandError
+__all__
+Tuple
+get_similar_commands
+get_pip_version
+List
+commands_dict
+cmdoptions
+get_prog
+ConfigOptionParser

@@ -1,0 +1,11 @@
+Text
+os
+url_to_path
+sys
+Union
+urllib_parse
+MYPY_CHECK_RUNNING
+path_to_url
+urllib_request
+get_url_scheme
+Optional

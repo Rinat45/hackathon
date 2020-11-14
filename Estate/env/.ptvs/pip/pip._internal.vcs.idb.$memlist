@@ -1,0 +1,10 @@
+git
+versioncontrol
+vcs
+pip
+make_vcs_requirement_url
+is_url
+subversion
+RemoteNotFoundError
+bazaar
+mercurial

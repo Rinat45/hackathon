@@ -1,0 +1,14 @@
+public_factory
+insert
+ext
+StandardInsert
+util
+schema
+OnConflictClause
+alias
+Insert
+__all__
+_generative
+ClauseElement
+OnConflictDoUpdate
+OnConflictDoNothing

@@ -1,0 +1,9 @@
+PY2
+urlparse
+text_type
+__all__
+iteritems
+urlunparse
+itervalues
+sys
+unicode

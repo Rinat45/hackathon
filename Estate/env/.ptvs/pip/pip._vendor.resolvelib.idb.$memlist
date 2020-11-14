@@ -1,0 +1,16 @@
+InconsistentCandidate
+structs
+__version__
+BaseReporter
+AbstractResolver
+reporters
+__all__
+RequirementsConflicted
+compat
+ResolutionError
+AbstractProvider
+providers
+resolvers
+ResolutionImpossible
+ResolutionTooDeep
+Resolver

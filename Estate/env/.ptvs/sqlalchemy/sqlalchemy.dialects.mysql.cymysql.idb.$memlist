@@ -1,0 +1,7 @@
+dialect
+_cymysqlBIT
+util
+BIT
+MySQLDialect
+MySQLDialect_cymysql
+MySQLDialect_mysqldb

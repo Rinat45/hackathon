@@ -1,0 +1,17 @@
+memoize
+supports_lone_surrogates
+PY3
+unicode_literals
+Mapping
+text_type
+_x
+isSurrogatePair
+absolute_import
+__all__
+BoundMethodDispatcher
+surrogatePairToCodepoint
+division
+MethodDispatcher
+default_etree
+ModuleType
+moduleFactoryFactory
