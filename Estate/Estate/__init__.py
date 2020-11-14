@@ -3,6 +3,10 @@ from flask_login import LoginManager
 
 import xml.etree.ElementTree as ET
 
+PATH_IMAGES={
+	'path':None,
+	}
+
 """
 The flask application package.
 """
@@ -40,6 +44,8 @@ def ReadConfigFromXML(nameFileXML):
 		POSTGRES['user']=web.find('user').text
 		POSTGRES['host']=web.find('host').text
 		POSTGRES['port']=web.find('port').text	
+		PATH_IMAGES['path']=root.find('UPLOAD_FOLDER').text
+		print('Path=',PATH_IMAGES['path'])
 	except Exception as e:
 		print('Error read config:'+str(e))
 		return False
@@ -62,6 +68,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CSRF_ENABLED'] = True
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+app.config['UPLOAD_FOLDER']=PATH_IMAGES['path']
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
@@ -71,8 +78,9 @@ login_manager.init_app(app)
 from .models import User
 @login_manager.user_loader
 def load_user(user_id):
-        	# since the user_id is just the primary key of our user table, use it in the query for the user
-	        return User.query.get(int(user_id))
+	# since the user_id is just the primary key of our user table, use it in the query for the user
+	return User.query.get(int(user_id))
+
 
 import Estate.views
 import Estate.auth

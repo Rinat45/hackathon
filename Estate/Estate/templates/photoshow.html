@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="row">
+    <h1 class="title">
+		Просмотр фотографии имущества.
+	</h1>	
+ <ul class="menu-list">	
+    <li><a>Наименование объекта {{name_estate}}</a></li>
+	<li><a>Адрес объекта {{addr_estate}}</a></li>    
+  </ul>   
+  <img src="{{ url_for('display_image', filename=filename) }}" >
+   <a href="{{ url_for('viewmess') }}" class="navbar-brand">Назад</a>
+</div>
+{% endblock %}

@@ -13,4 +13,13 @@
     <host>localhost</host>
     <port>5432</port>
   </postgresql>
+  <UPLOAD_FOLDER>E:\images</UPLOAD_FOLDER>
+  <email>
+    <MAIL_SERVER ></MAIL_SERVER>
+    <MAIL_PORT  ></MAIL_PORT>
+    <MAIL_USE_TLS></MAIL_USE_TLS>
+    <MAIL_USE_SSL></MAIL_USE_SSL>
+    <MAIL_USERNAME></MAIL_USERNAME>
+    <MAIL_PASSWORD></MAIL_PASSWORD>
+  </email>
 </Estate>

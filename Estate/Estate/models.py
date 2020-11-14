@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 from Estate import db
 import datetime
 
@@ -53,6 +54,15 @@ class estates(UserMixin,db.Model):
     kadastr = db.Column(db.String(200))
     description = db.Column(db.String(1000))
     contact=db.Column(db.String(500))
-    img=db.Column(db.LargeBinary)
+    #img=db.Column(db.LargeBinary)
+    img_path=db.Column(db.String(1000))
+    dat_=db.Column(db.DateTime, default=func.now())
+    state_=db.Column(db.Integer, default=0)
+
+class readed_estates(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    id_org=db.Column(db.Integer)
+    id_estate=db.Column(db.Integer)
+    state=db.Column(db.Integer)  
 
     
