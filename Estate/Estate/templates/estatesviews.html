@@ -12,11 +12,20 @@
 	    </div>
 	{% endif %}
 	{% endwith %}
+	<form method="POST" action="/viewmess">
+		<select name="filter" id="cars">
+			<option value="unreaded">Не прочитанные</option>
+			<option value="all">Все</option>		
+			<option value="readed">Прочитанные</option>		
+		</select>
+		<button class="button is-block is-info is-large is-fullwidth">Фильтр</button>
+	</form>
 	<table class="table is-fullwidth">
 	<thead>
 	    <tr>
 	      <th><abbr title="edit">Принять</abbr></th>
           <th><abbr title="edit">Согласия</abbr></th>
+		  <th><abbr title="edit">Прочитано</abbr></th>
 	      <th><abbr title="NN">№</abbr></th>
 	      <th><abbr title="dat">Дата</abbr></th>
 	      <th><abbr title="org">Балансодержатель</abbr></th>
@@ -33,7 +42,12 @@
 		{% for estate in dates_esates %}
 		<tr>
 			<td><a href="{{url_for('accept_estate',id=estate.estates.id)}}" class="button is-link">Принять</a></td>            
-            <td><a href="/" >{{estate.estates.count_succes}}</a></td>									
+            <td><a href="{{url_for('view_accepts',id=estate.estates.id)}}" >{{estate.estates.count_succes}}</a></td>
+			{% if estate.estates.state==1 %}
+				<td>Прочитано</td>
+			{% else %}
+				<td><a href="{{url_for('readed_mess',id=estate.estates.id)}}">Прочитать</a></td>									
+			{% endif %}						
 			<th>{{ loop.index }}</th>
 			<td>{{ estate.estates.dat_ }}</td>
 			<td>{{ estate.User.org }}</td>

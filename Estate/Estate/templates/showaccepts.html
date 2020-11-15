@@ -14,36 +14,19 @@
 	{% endwith %}
 	<table class="table is-fullwidth">
 	<thead>
-	    <tr>
-	      <th><abbr title="edit">Принять</abbr></th>
-          <th><abbr title="edit">Согласия</abbr></th>
+	    <tr>	      
 	      <th><abbr title="NN">№</abbr></th>
 	      <th><abbr title="dat">Дата</abbr></th>
-	      <th><abbr title="org">Балансодержатель</abbr></th>
-	      <th><abbr title="name_estate">Наименование объекта</abbr></th>
-	      <th><abbr title="addr">Адрес</abbr></th>
-	      <th><abbr title="area">Площадь</abbr></th>
-	      <th><abbr title="kadastr">Кадастровый номер</abbr></th>
-	      <th><abbr title="description">Описание</abbr></th>
-		  <th><abbr title="contact">Контакт</abbr></th>
-	      <th><abbr title="img">Фотография</abbr></th>
+	      <th><abbr title="org">Организация</abbr></th>	      
 	    </tr>
 	  </thead>        
         <tbody>
-		{% for estate in dates_esates %}
-		<tr>
-			<td><a href="{{url_for('accept_estate',id=estate.estates.id)}}" class="button is-link">Принять</a></td>            
-            <td><a href="/" >{{estate.estates.count_succes}}</a></td>									
+		{% for dat in dates %}
+		<tr>			
 			<th>{{ loop.index }}</th>
-			<td>{{ estate.estates.dat_ }}</td>
-			<td>{{ estate.User.org }}</td>
-			<td>{{ estate.estates.name_estate }}</td>						
-			<td>{{ estate.estates.addr }}</td>						
-			<td>{{ estate.estates.area }}</td>
-			<td>{{ estate.estates.kadastr }}</td>
-			<td>{{ estate.estates.description }}</td>						
-			<td>{{ estate.estates.contact }}</td>									
-            <td><a href="{{url_for('photoshow',id=estate.estates.id)}}" class="button is-link">Фото</a></td>									
+			<td>{{ dat.estates_success.dat_ }}</td>
+			<td>{{ dat.User.org }}</td>
+			
 		</tr>
 	{% endfor %}
         </tbody>

@@ -12,13 +12,30 @@ from datetime import datetime
 from flask import render_template,request,flash,redirect, url_for,send_file,copy_current_request_context
 from werkzeug.utils import secure_filename
 from Estate import app,db,mail
-from .models import estates,User,estates_success
+from .models import estates,User,estates_success,readed_estates
 from flask_login import current_user
 from flask_mail import  Message
 from threading import Thread
 
 
 
+def GetMessages(filter=None):
+	q=db.session.query(estates,User).join(User,User.id==estates.id_org)	
+	query_=q.order_by(estates.dat_).all()
+	dat=[]
+	for i in range(len(query_)):
+		r=readed_estates.query.filter(readed_estates.id_estate==query_[i].estates.id,readed_estates.id_org==current_user.id).first()
+		if r!=None:
+			query_[i].estates.state=1		
+		else:
+			query_[i].estates.state=0
+		if filter=='all' or filter==None:
+			dat.append(query_[i])
+		elif filter=='readed' and query_[i].estates.state==1:
+			dat.append(query_[i])
+		elif filter=='unreaded' and query_[i].estates.state==0:
+			dat.append(query_[i])
+	return dat
 '''@async
 def send_async_email(msg):
 	with app.app_context():
@@ -132,16 +149,30 @@ def addmess():
 		mail.send(msg)'''
 	return redirect(url_for('profile'))        	
 
-@app.route('/viewmess')
+@app.route('/viewmess',methods=['POST'])
+def viewmesspost():
+	filter = request.form.get('filter')
+	print('filter=',filter)
+
+	dates=GetMessages(filter)
+	
+	return render_template('estatesviews.html',dates_esates=dates)
+@app.route('/viewmess',)
 def viewmess():
 	#query_ = db.session.query(estates)
 	#query_ = query_.join(User,User.id==estates.id_org).all()	
-	q=db.session.query(estates,User).join(User,User.id==estates.id_org)
+	'''q=db.session.query(estates,User).join(User,User.id==estates.id_org)
 	
 	query_=q.order_by(estates.dat_).all()
-
+	for i in range(len(query_)):
+		r=readed_estates.query.filter(readed_estates.id_estate==query_[i].estates.id,readed_estates.id_org==current_user.id).first()
+		if r!=None:
+			query_[i].estates.state=1		
+		else:
+			query_[i].estates.state=0'''
+	dates=GetMessages()
 	
-	return render_template('estatesviews.html',dates_esates=query_)
+	return render_template('estatesviews.html',dates_esates=dates)
 @app.route('/photoshow')
 def photoshow():	
 	id=request.args.get('id')
@@ -179,9 +210,22 @@ def add_accept():
 def view_accepts():
 	#query_ = db.session.query(estates)
 	#query_ = query_.join(User,User.id==estates.id_org).all()	
-	#q=db.session.query(estates,User).join(User,User.id==estates.id_org)
+	id=request.args.get('id')
 	
-	#query_=q.order_by(estates.dat_).all()
+	q=db.session.query(estates_success,User).join(User,User.id==estates_success.id_org)
+	
+	print('query_=',q)
+	query_=q.filter(estates_success.id_estate==id).order_by(estates_success.dat_).all()
 
+	print('query_=',query_)
 	
-	return render_template('showaccepts.html')
+	return render_template('showaccepts.html',dates=query_)
+@app.route('/readed_mess')
+def readed_mess():	
+	id=request.args.get('id')
+	new_r=readed_estates(id_org=current_user.id,id_estate=id)
+	db.session.add(new_r)	
+	db.session.commit()	
+	dates=GetMessages()
+	flash('Запись отмечена как прочитанная!')
+	return render_template('estatesviews.html',dates_esates=dates)

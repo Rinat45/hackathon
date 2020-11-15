@@ -70,6 +70,6 @@ class estates_success(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
     id_org=db.Column(db.Integer)
     id_estate=db.Column(db.Integer)
-
+    dat_=db.Column(db.DateTime, default=func.now())
 
     
