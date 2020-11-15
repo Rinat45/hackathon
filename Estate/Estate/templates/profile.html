@@ -20,8 +20,9 @@
     </div>
     {% endif %}
  <ul class="menu-list">	
-    <li><a href="{{ url_for('viewmess') }}">Просмотреть публикации о свободном имуществе</a></li>
-    <li><a href="{{ url_for('addmess') }}">Опубликовать информацию о свободном имуществе</a></li>
+    <li><a href="{{ url_for('viewmess_new') }}">Новые публикации</a></li>
+    <li><a href="{{ url_for('viewmess') }}">Высвобождаемое имущество</a></li>
+    <li><a href="{{ url_for('addmess') }}">Опубликовать информацию о заявке освободить имущество</a></li>
     <li><a href="{{ url_for('logout') }}">Выход из личного кабинета</a></li>    
   </ul>
 </div>

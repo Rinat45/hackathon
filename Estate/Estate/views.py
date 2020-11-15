@@ -8,7 +8,7 @@ import sys
 import uuid
 
 
-from datetime import datetime
+from datetime import datetime, timedelta 
 
 from flask import render_template,request,flash,redirect, url_for,send_file,copy_current_request_context
 from werkzeug.utils import secure_filename
@@ -20,9 +20,17 @@ from threading import Thread
 
 
 
-def GetMessages(filter=None):
+def GetMessages(filter=None,curr_date=None):
+	
 	q=db.session.query(estates,User).join(User,User.id==estates.id_org)	
-	query_=q.order_by(estates.dat_).all()
+	if curr_date!=None:
+		days = timedelta(30)
+		print('date=',curr_date)
+		date=curr_date-days;
+		print('date=',date)
+		query_=q.filter(estates.dat_>=date).order_by(estates.dat_).all()
+	else:
+		query_=q.order_by(estates.dat_).all()
 	dat=[]
 	for i in range(len(query_)):
 		r=readed_estates.query.filter(readed_estates.id_estate==query_[i].estates.id,readed_estates.id_org==current_user.id).first()
@@ -156,7 +164,7 @@ def addmess():
 def viewmesspost():
 	filter = request.form.get('filter')
 	print('filter=',filter)
-
+	
 	dates=GetMessages(filter)
 	
 	return render_template('estatesviews.html',dates_esates=dates,filter=filter)
@@ -174,6 +182,23 @@ def viewmess():
 		else:
 			query_[i].estates.state=0'''
 	dates=GetMessages()
+	
+	return render_template('estatesviews.html',dates_esates=dates)
+@app.route('/viewmess_new',)
+def viewmess_new():
+	#query_ = db.session.query(estates)
+	#query_ = query_.join(User,User.id==estates.id_org).all()	
+	'''q=db.session.query(estates,User).join(User,User.id==estates.id_org)
+	
+	query_=q.order_by(estates.dat_).all()
+	for i in range(len(query_)):
+		r=readed_estates.query.filter(readed_estates.id_estate==query_[i].estates.id,readed_estates.id_org==current_user.id).first()
+		if r!=None:
+			query_[i].estates.state=1		
+		else:
+			query_[i].estates.state=0'''
+	curr_date=datetime.today()
+	dates=GetMessages(None,curr_date)
 	
 	return render_template('estatesviews.html',dates_esates=dates)
 @app.route('/photoshow')
