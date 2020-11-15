@@ -1,65 +1,85 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="row">
+<div class="column is-full">
     <h1 class="title">
-  Список публикаций о свободном имуществе!
-</h1>
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-	    <div class="notification is-info">
-		{{ messages[0] }} 
-	    </div>
-	{% endif %}
-	{% endwith %}
-	<form method="POST" action="/viewmess">
-		<select name="filter" id="cars">
-			<option value="unreaded">Не прочитанные</option>
-			<option value="all">Все</option>		
-			<option value="readed">Прочитанные</option>		
-		</select>
-		<button class="button is-block is-info is-large is-fullwidth">Фильтр</button>
-	</form>
-	<table class="table is-fullwidth">
-	<thead>
-	    <tr>
-	      <th><abbr title="edit">Принять</abbr></th>
-          <th><abbr title="edit">Согласия</abbr></th>
-		  <th><abbr title="edit">Прочитано</abbr></th>
-	      <th><abbr title="NN">№</abbr></th>
-	      <th><abbr title="dat">Дата</abbr></th>
-	      <th><abbr title="org">Балансодержатель</abbr></th>
-	      <th><abbr title="name_estate">Наименование объекта</abbr></th>
-	      <th><abbr title="addr">Адрес</abbr></th>
-	      <th><abbr title="area">Площадь</abbr></th>
-	      <th><abbr title="kadastr">Кадастровый номер</abbr></th>
-	      <th><abbr title="description">Описание</abbr></th>
-		  <th><abbr title="contact">Контакт</abbr></th>
-	      <th><abbr title="img">Фотография</abbr></th>
-	    </tr>
-	  </thead>        
+        Список публикаций о свободном имуществе!
+    </h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-info">
+        {{ messages[0] }}
+    </div>
+    {% endif %}
+    {% endwith %}
+    {% if not filter %}
+    <div class="notification is-info">
+        Фильтр не используется
+    </div>
+    {% endif %}
+    {% if filter=='all' %}
+    <div class="notification is-info">
+        Фильтр не используется
+    </div>
+    {% endif %}
+    {% if filter=='unreaded' %}
+    <div class="notification is-info">
+        Фильтр: выводить непрочитанные публикации
+    </div>
+    {% endif %}
+    {% if filter=='readed' %}
+    <div class="notification is-info">
+        Фильтр: выводить прочитанные публикации
+    </div>
+    {% endif %}
+    <form method="POST" action="/viewmess">
+        <select name="filter" id="cars">
+            <option value="unreaded">Не прочитанные</option>
+            <option value="all">Все</option>
+            <option value="readed">Прочитанные</option>
+        </select>
+        <button class="button">Фильтр</button>
+    </form>
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th><abbr title="edit">Принять</abbr></th>
+                <th><abbr title="edit">Согласия</abbr></th>
+                <th><abbr title="edit">Прочитано</abbr></th>
+                <th><abbr title="NN">№</abbr></th>
+                <th><abbr title="dat">Дата</abbr></th>
+                <th><abbr title="org">Балансодержатель</abbr></th>
+                <th><abbr title="name_estate">Наименование объекта</abbr></th>
+                <th><abbr title="addr">Адрес</abbr></th>
+                <th><abbr title="area">Площадь</abbr></th>
+                <th><abbr title="kadastr">Кадастровый номер</abbr></th>
+                <th><abbr title="description">Описание</abbr></th>
+                <th><abbr title="contact">Контакт</abbr></th>
+                <th><abbr title="img">Фотография</abbr></th>
+            </tr>
+        </thead>
         <tbody>
-		{% for estate in dates_esates %}
-		<tr>
-			<td><a href="{{url_for('accept_estate',id=estate.estates.id)}}" class="button is-link">Принять</a></td>            
-            <td><a href="{{url_for('view_accepts',id=estate.estates.id)}}" >{{estate.estates.count_succes}}</a></td>
-			{% if estate.estates.state==1 %}
-				<td>Прочитано</td>
-			{% else %}
-				<td><a href="{{url_for('readed_mess',id=estate.estates.id)}}">Прочитать</a></td>									
-			{% endif %}						
-			<th>{{ loop.index }}</th>
-			<td>{{ estate.estates.dat_ }}</td>
-			<td>{{ estate.User.org }}</td>
-			<td>{{ estate.estates.name_estate }}</td>						
-			<td>{{ estate.estates.addr }}</td>						
-			<td>{{ estate.estates.area }}</td>
-			<td>{{ estate.estates.kadastr }}</td>
-			<td>{{ estate.estates.description }}</td>						
-			<td>{{ estate.estates.contact }}</td>									
-            <td><a href="{{url_for('photoshow',id=estate.estates.id)}}" class="button is-link">Фото</a></td>									
-		</tr>
-	{% endfor %}
+            {% for estate in dates_esates %}
+            <tr>
+                <td><a href="{{url_for('accept_estate',id=estate.estates.id)}}" class="button is-link">Принять</a></td>
+                <td><a href="{{url_for('view_accepts',id=estate.estates.id)}}">{{estate.estates.count_succes}}</a></td>
+                {% if estate.estates.state==1 %}
+                <td>Прочитано</td>
+                {% else %}
+                <td><a href="{{url_for('readed_mess',id=estate.estates.id)}}">Прочитать</a></td>
+                {% endif %}
+                <th>{{ loop.index }}</th>
+                <td>{{ estate.estates.dat_ }}</td>
+                <td>{{ estate.User.org }}</td>
+                <td>{{ estate.estates.name_estate }}</td>
+                <td>{{ estate.estates.addr }}</td>
+                <td>{{ estate.estates.area }}</td>
+                <td>{{ estate.estates.kadastr }}</td>
+                <td>{{ estate.estates.description }}</td>
+                <td>{{ estate.estates.contact }}</td>
+                <td><a href="{{url_for('photoshow',id=estate.estates.id)}}" class="button is-link">Фото</a></td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>

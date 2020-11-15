@@ -55,10 +55,7 @@ def signup_post():
     db.session.commit()
 
     return redirect(url_for('login'))
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', name=current_user.name)
+
 
 @app.route('/logout')
 @login_required

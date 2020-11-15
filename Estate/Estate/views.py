@@ -9,11 +9,12 @@ import uuid
 
 
 from datetime import datetime
+
 from flask import render_template,request,flash,redirect, url_for,send_file,copy_current_request_context
 from werkzeug.utils import secure_filename
 from Estate import app,db,mail
 from .models import estates,User,estates_success,readed_estates
-from flask_login import current_user
+from flask_login import login_user, logout_user, login_required,current_user
 from flask_mail import  Message
 from threading import Thread
 
@@ -140,6 +141,7 @@ def addmess():
 	for user in users_:
 		if current_user.id!=user.id:
 			dst_emails.append(user.email)
+	
 	if len(dst_emails)>0:	
 		
 		msg_body="Наименование объекта: "+name_estate+"\n"+"Адрес: "+addr+"\n"+"Кадастровый номер: "+kadastr
@@ -147,6 +149,7 @@ def addmess():
 		'''msg = Message("Данные о свободном имуществе", sender=app.config['MAIL_USERNAME'],  recipients=dst_emails)
 		msg.body="Наименование объекта: "
 		mail.send(msg)'''
+	flash('Публикация успешно размещена в сервисе!')
 	return redirect(url_for('profile'))        	
 
 @app.route('/viewmess',methods=['POST'])
@@ -156,7 +159,7 @@ def viewmesspost():
 
 	dates=GetMessages(filter)
 	
-	return render_template('estatesviews.html',dates_esates=dates)
+	return render_template('estatesviews.html',dates_esates=dates,filter=filter)
 @app.route('/viewmess',)
 def viewmess():
 	#query_ = db.session.query(estates)
@@ -229,3 +232,10 @@ def readed_mess():
 	dates=GetMessages()
 	flash('Запись отмечена как прочитанная!')
 	return render_template('estatesviews.html',dates_esates=dates)
+
+@app.route('/profile')
+@login_required
+def profile():	
+	dates=GetMessages('unreaded')
+	count_unread=len(dates)
+	return render_template('profile.html', name=current_user.name,count_unread=count_unread)

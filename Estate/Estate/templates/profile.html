@@ -14,6 +14,11 @@
 	    </div>
 	{% endif %}
 	{% endwith %}
+    {% if count_unread>0 %}
+    <div class="notification is-info">
+        Обратите внимание: у вас есть непрочитанные сообщения ({{count_unread}})
+    </div>
+    {% endif %}
  <ul class="menu-list">	
     <li><a href="{{ url_for('viewmess') }}">Просмотреть публикации о свободном имуществе</a></li>
     <li><a href="{{ url_for('addmess') }}">Опубликовать информацию о свободном имуществе</a></li>
