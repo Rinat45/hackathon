@@ -9,11 +9,32 @@ import uuid
 
 
 from datetime import datetime
-from flask import render_template,request,flash,redirect, url_for,send_file
+from flask import render_template,request,flash,redirect, url_for,send_file,copy_current_request_context
 from werkzeug.utils import secure_filename
-from Estate import app,db
+from Estate import app,db,mail
 from .models import estates,User
 from flask_login import current_user
+from flask_mail import  Message
+from threading import Thread
+
+
+
+'''@async
+def send_async_email(msg):
+	with app.app_context():
+		mail.send(msg)'''
+
+def send_email(subject, sender, recipients, text_body):
+    msg = Message(subject, sender = sender, recipients = recipients)
+    msg.body = text_body
+    
+
+    @copy_current_request_context
+    def send_message(msg):
+        mail.send(msg)    
+    thr = Thread(name='mail_sender', target=send_message, args=(msg,))
+    thr.start()
+
 
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -97,6 +118,18 @@ def addmess():
 					contact=contact,img_path=full_name)
 	db.session.add(new_estate)	
 	db.session.commit()	
+	users_=User.query.all()
+	dst_emails=[]
+	for user in users_:
+		if current_user.id!=user.id:
+			dst_emails.append(user.email)
+	if len(dst_emails)>0:	
+		
+		msg_body="Наименование объекта: "+name_estate+"\n"+"Адрес: "+addr+"\n"+"Кадастровый номер: "+kadastr
+		send_email("Появилась публикация о новом объекте имущества",app.config['MAIL_USERNAME'],dst_emails,msg_body)
+		'''msg = Message("Данные о свободном имуществе", sender=app.config['MAIL_USERNAME'],  recipients=dst_emails)
+		msg.body="Наименование объекта: "
+		mail.send(msg)'''
 	return redirect(url_for('profile'))        	
 
 @app.route('/viewmess')

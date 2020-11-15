@@ -58,11 +58,18 @@ class estates(UserMixin,db.Model):
     img_path=db.Column(db.String(1000))
     dat_=db.Column(db.DateTime, default=func.now())
     state_=db.Column(db.Integer, default=0)
+    count_succes=db.Column(db.Integer, default=0)
 
 class readed_estates(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
     id_org=db.Column(db.Integer)
     id_estate=db.Column(db.Integer)
     state=db.Column(db.Integer)  
+
+class estates_success(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    id_org=db.Column(db.Integer)
+    id_estate=db.Column(db.Integer)
+
 
     

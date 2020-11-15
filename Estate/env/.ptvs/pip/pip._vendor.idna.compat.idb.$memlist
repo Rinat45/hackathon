@@ -16,7 +16,6 @@ check_label
 IncrementalDecoder
 getregentry
 check_bidi
-unicodedata
 IDNABidiError
 valid_label_length
 InvalidCodepointContext

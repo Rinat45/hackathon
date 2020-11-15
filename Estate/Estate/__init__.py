@@ -1,7 +1,18 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_mail import Mail, Message
+
 
 import xml.etree.ElementTree as ET
+
+CONFIG_MAIL={
+	'MAIL_SERVER':None,
+	'MAIL_PORT':None,
+	'MAIL_USE_TLS':False,
+	'MAIL_USERNAME':False,
+	'MAIL_PASSWORD':False,
+	}
+
 
 PATH_IMAGES={
 	'path':None,
@@ -46,6 +57,12 @@ def ReadConfigFromXML(nameFileXML):
 		POSTGRES['port']=web.find('port').text	
 		PATH_IMAGES['path']=root.find('UPLOAD_FOLDER').text
 		print('Path=',PATH_IMAGES['path'])
+		mail=root.find('email')
+		CONFIG_MAIL['MAIL_SERVER']=mail.find('MAIL_SERVER').text
+		CONFIG_MAIL['MAIL_PORT']=mail.find('MAIL_PORT').text
+		CONFIG_MAIL['MAIL_USE_TLS']=mail.find('MAIL_USE_TLS').text
+		CONFIG_MAIL['MAIL_USERNAME']=mail.find('MAIL_USERNAME').text
+		CONFIG_MAIL['MAIL_PASSWORD']=mail.find('MAIL_PASSWORD').text
 	except Exception as e:
 		print('Error read config:'+str(e))
 		return False
@@ -69,7 +86,21 @@ app.config['CSRF_ENABLED'] = True
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 app.config['UPLOAD_FOLDER']=PATH_IMAGES['path']
+
+app.config['MAIL_SERVER'] = CONFIG_MAIL['MAIL_SERVER']
+app.config['MAIL_PORT'] = CONFIG_MAIL['MAIL_PORT']
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = CONFIG_MAIL['MAIL_USE_TLS']
+app.config['MAIL_USERNAME'] = CONFIG_MAIL['MAIL_USERNAME']
+app.config['MAIL_PASSWORD'] = CONFIG_MAIL['MAIL_PASSWORD']
+
+
+
 db = SQLAlchemy(app)
+
+mail = Mail(app)
+
+
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'

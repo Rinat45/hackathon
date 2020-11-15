@@ -15,11 +15,10 @@
   </postgresql>
   <UPLOAD_FOLDER>E:\images</UPLOAD_FOLDER>
   <email>
-    <MAIL_SERVER ></MAIL_SERVER>
-    <MAIL_PORT  ></MAIL_PORT>
-    <MAIL_USE_TLS></MAIL_USE_TLS>
-    <MAIL_USE_SSL></MAIL_USE_SSL>
-    <MAIL_USERNAME></MAIL_USERNAME>
-    <MAIL_PASSWORD></MAIL_PASSWORD>
+    <MAIL_SERVER >smtp.mail.ru</MAIL_SERVER>
+    <MAIL_PORT>465</MAIL_PORT>
+    <MAIL_USE_TLS>True</MAIL_USE_TLS>    
+    <MAIL_USERNAME>chakaton_oren@mail.ru</MAIL_USERNAME>
+    <MAIL_PASSWORD>iso3A(HRPir1</MAIL_PASSWORD>
   </email>
 </Estate>

@@ -15,7 +15,8 @@
 	<table class="table is-fullwidth">
 	<thead>
 	    <tr>
-	      <th><abbr title="edit">Редактировать</abbr></th>
+	      <th><abbr title="edit">Принять</abbr></th>
+          <th><abbr title="edit">Согласия</abbr></th>
 	      <th><abbr title="NN">№</abbr></th>
 	      <th><abbr title="dat">Дата</abbr></th>
 	      <th><abbr title="org">Балансодержатель</abbr></th>
@@ -32,6 +33,7 @@
 		{% for estate in dates_esates %}
 		<tr>
 			<td><a href="/" class="button is-link">Редактировать</a></td>
+            <th>0</th>
 			<th>{{ loop.index }}</th>
 			<td>{{ estate.estates.dat_ }}</td>
 			<td>{{ estate.User.org }}</td>
