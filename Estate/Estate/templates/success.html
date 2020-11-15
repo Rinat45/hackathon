@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="row">
+    <h1 class="title">
+  Принять объект на баланс!
+</h1>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	    <div class="notification is-info">
+		{{ messages[0] }} 
+	    </div>
+	{% endif %}
+	{% endwith %}
+	<ul class="menu-list">	
+    <li><a>Наименование объекта {{name_estate}}</a></li>
+	<li><a>Адрес объекта {{addr_estate}}</a></li>    
+  </ul>   
+  <img src="{{ url_for('display_image', filename=filename) }}" width="200" height="200" >
+	<form method="POST" action="/add_accept">
+            <input class="input is-large" type="hidden" name="id" value="{{id}}">
+            <button class="button is-block is-info is-large is-fullwidth" name="res" value="ok">Принять на баланс</button>
+			<button class="button is-block is-info is-large is-fullwidth" name="res" value="cancel">Отмена</button>
+        </form>
+</div>
+
+{% endblock %}

@@ -12,7 +12,7 @@ from datetime import datetime
 from flask import render_template,request,flash,redirect, url_for,send_file,copy_current_request_context
 from werkzeug.utils import secure_filename
 from Estate import app,db,mail
-from .models import estates,User
+from .models import estates,User,estates_success
 from flask_login import current_user
 from flask_mail import  Message
 from threading import Thread
@@ -137,10 +137,10 @@ def viewmess():
 	#query_ = db.session.query(estates)
 	#query_ = query_.join(User,User.id==estates.id_org).all()	
 	q=db.session.query(estates,User).join(User,User.id==estates.id_org)
-	print('q=',q)
+	
 	query_=q.order_by(estates.dat_).all()
 
-	print('dates=',query_)
+	
 	return render_template('estatesviews.html',dates_esates=query_)
 @app.route('/photoshow')
 def photoshow():	
@@ -150,3 +150,38 @@ def photoshow():
 @app.route('/display/<filename>')
 def display_image(filename):	
 	return send_file(filename)
+@app.route('/accept_estate')
+def accept_estate():	
+	id=request.args.get('id')
+	accept_ = estates_success.query.filter(estates_success.id_org==current_user.id,estates_success.id_estate==id).first()
+	if accept_!=None:
+		flash('Ошибка!Вы уже дали заявку принять данный объект!')
+		q=db.session.query(estates,User).join(User,User.id==estates.id_org)	
+		query_=q.order_by(estates.dat_).all()	
+		return render_template('estatesviews.html',dates_esates=query_)
+	estate_ = estates.query.filter(estates.id==id).first()
+	return render_template('success.html',name_estate=estate_.name_estate,addr_estate=estate_.addr,filename=estate_.img_path,id=id)
+@app.route('/add_accept', methods=['POST'])
+def add_accept():
+	
+	res = request.form.get('res')
+	id = request.form.get('id')
+	print('res=',res)
+	print('id=',id)
+	if res=='ok':
+		new_accept=estates_success(id_org=current_user.id,id_estate=id)
+		db.session.add(new_accept)	
+		estate_ = estates.query.filter(estates.id==id).first()
+		estate_.count_succes=estate_.count_succes+1        
+		db.session.commit()	
+	return redirect(url_for('profile'))        	
+@app.route('/view_accepts')
+def view_accepts():
+	#query_ = db.session.query(estates)
+	#query_ = query_.join(User,User.id==estates.id_org).all()	
+	#q=db.session.query(estates,User).join(User,User.id==estates.id_org)
+	
+	#query_=q.order_by(estates.dat_).all()
+
+	
+	return render_template('showaccepts.html')

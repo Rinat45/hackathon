@@ -32,8 +32,8 @@
         <tbody>
 		{% for estate in dates_esates %}
 		<tr>
-			<td><a href="/" class="button is-link">Редактировать</a></td>
-            <th>0</th>
+			<td><a href="{{url_for('accept_estate',id=estate.estates.id)}}" class="button is-link">Принять</a></td>            
+            <td><a href="/" >{{estate.estates.count_succes}}</a></td>									
 			<th>{{ loop.index }}</th>
 			<td>{{ estate.estates.dat_ }}</td>
 			<td>{{ estate.User.org }}</td>

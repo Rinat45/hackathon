@@ -27,4 +27,5 @@ IDNABidiError
 uts46data
 check_hyphen_ok
 valid_contextj
+unicodedata
 check_bidi
